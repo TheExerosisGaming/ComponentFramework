@@ -2,19 +2,39 @@ package me.exerosis.component;
 
 import me.exerosis.component.event.componet.ComponentDisableEvent;
 import me.exerosis.component.event.componet.ComponentEnableEvent;
+import me.exerosis.component.systemstate.ComponentSystemHolder;
 import me.exerosis.reflection.event.EventManager;
 import me.exerosis.reflection.pool.InstancePool;
 
 public interface ComponentSystem {
-    EventManager EVENT_MANAGER = new EventManager();
 
-    default boolean doesFollowDependencyInjection() {
-        return false;
+    default EventManager getEventManager() {
+        return ComponentSystemHolder.getEventManager(this);
     }
 
-    EventManager getEventManager();
+    default void setEventManager(EventManager manager) {
+        ComponentSystemHolder.setEventManager(this, manager);
+    }
 
-    InstancePool getInstancePool();
+    default Enum getSystemState() {
+        return ComponentSystemHolder.getSystemState(this);
+    }
+
+    default void setSystemState(final Enum systemState) {
+        ComponentSystemHolder.setSystemState(this, systemState);
+    }
+
+    default InstancePool getInstancePool() {
+        return ComponentSystemHolder.getInstancePool(this);
+    }
+
+    default boolean doesFollowDependencyInjection() {
+        return ComponentSystemHolder.doesFollowDependencyInjection(this);
+    }
+
+    default void setDoesFollowDependencyInjection(boolean doesFollowDependencyInjection) {
+        ComponentSystemHolder.setDoesFollowDependencyInjection(this, doesFollowDependencyInjection);
+    }
 
     // ComponentSystem Management
     default void enableSystem() {
@@ -26,7 +46,7 @@ public interface ComponentSystem {
             if (!(object instanceof Component))
                 continue;
             Component component = ((Component) object);
-            (getEventManager() == null ? EVENT_MANAGER : getEventManager()).callEvent(new ComponentEnableEvent(this, component), event -> {
+            getEventManager().callEvent(new ComponentEnableEvent(this, component), event -> {
                 if (event.isCancelled())
                     return;
                 count[0]++;
@@ -42,7 +62,7 @@ public interface ComponentSystem {
             if (!(object instanceof Component))
                 continue;
             Component component = ((Component) object);
-            (getEventManager() == null ? EVENT_MANAGER : getEventManager()).callEvent(new ComponentDisableEvent(this, component), event -> {
+            getEventManager().callEvent(new ComponentDisableEvent(this, component), event -> {
                 if (event.isCancelled())
                     return;
                 count[0]++;
