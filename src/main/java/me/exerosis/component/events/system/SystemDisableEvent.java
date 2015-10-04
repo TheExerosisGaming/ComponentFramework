@@ -1,12 +1,12 @@
-package me.exerosis.component.event.system;
+package me.exerosis.component.events.system;
 
 import me.exerosis.component.ComponentSystem;
-import me.exerosis.reflection.event.Cancellable;
+import me.exerosis.component.event.Cancellable;
 
-public class SystemEnableEvent extends SystemEvent implements Cancellable {
+public class SystemDisableEvent extends SystemEvent implements Cancellable {
     private boolean cancelled;
 
-    public SystemEnableEvent(ComponentSystem system) {
+    public SystemDisableEvent(ComponentSystem system) {
         super(system);
     }
 
@@ -17,6 +17,7 @@ public class SystemEnableEvent extends SystemEvent implements Cancellable {
 
     @Override
     public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
         this.cancelled = cancelled;
     }
 }

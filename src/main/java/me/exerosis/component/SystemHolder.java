@@ -1,20 +1,17 @@
 package me.exerosis.component;
 
-import me.exerosis.component.event.system.SystemDisableEvent;
-import me.exerosis.component.event.system.SystemEnableEvent;
+import me.exerosis.component.events.system.SystemDisableEvent;
+import me.exerosis.component.events.system.SystemEnableEvent;
 import me.exerosis.component.factory.SystemFactory;
 
 public class SystemHolder {
     private SystemFactory factory;
     private ComponentSystem currentSystem;
 
-    public SystemHolder(SystemFactory factory) {
-        this.factory = factory;
-    }
-
     // ComponentSystem management.
     public void nextSystem() {
-        setCurrentSystem(factory.getNextGame());
+        if (factory != null)
+            setCurrentSystem(factory.getNextGame());
     }
 
     //System management.

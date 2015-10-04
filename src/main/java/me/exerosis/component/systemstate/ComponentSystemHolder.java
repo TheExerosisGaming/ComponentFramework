@@ -1,14 +1,16 @@
 package me.exerosis.component.systemstate;
 
 import me.exerosis.component.ComponentSystem;
-import me.exerosis.component.event.system.SystemStateChangeEvent;
-import me.exerosis.reflection.event.EventManager;
+import me.exerosis.component.event.EventManager;
+import me.exerosis.component.events.system.SystemStateChangeEvent;
 import me.exerosis.reflection.pool.InstancePool;
 
 import java.util.Map;
 import java.util.WeakHashMap;
 
 public class ComponentSystemHolder {
+
+    private static Map<ComponentSystem, PseudoInstance> instances = new WeakHashMap<>();
 
     private ComponentSystemHolder() {
     }
@@ -41,8 +43,6 @@ public class ComponentSystemHolder {
         getInstance(instance).setDoesFollowDependencyInjection(doesFollowDependencyInjection);
     }
 
-    private static Map<ComponentSystem, PseudoInstance> instances = new WeakHashMap<>();
-
     @SuppressWarnings("unchecked")
     private static PseudoInstance getInstance(ComponentSystem instance) {
         PseudoInstance pseudoInstance = instances.get(instance);
@@ -55,10 +55,10 @@ public class ComponentSystemHolder {
 
 
     public static class PseudoInstance {
-        private EventManager eventManager = new EventManager();
-        private Enum currentSystemState;
         private final ComponentSystem instance;
         private final InstancePool instancePool = new InstancePool();
+        private EventManager eventManager = new EventManager();
+        private Enum currentSystemState;
         private boolean doesFollowDependencyInjection;
 
         public PseudoInstance(final ComponentSystem instance) {

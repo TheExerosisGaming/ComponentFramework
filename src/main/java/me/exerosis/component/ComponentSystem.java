@@ -1,9 +1,9 @@
 package me.exerosis.component;
 
-import me.exerosis.component.event.componet.ComponentDisableEvent;
-import me.exerosis.component.event.componet.ComponentEnableEvent;
+import me.exerosis.component.event.EventManager;
+import me.exerosis.component.events.componet.ComponentDisableEvent;
+import me.exerosis.component.events.componet.ComponentEnableEvent;
 import me.exerosis.component.systemstate.ComponentSystemHolder;
-import me.exerosis.reflection.event.EventManager;
 import me.exerosis.reflection.pool.InstancePool;
 
 public interface ComponentSystem {

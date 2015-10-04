@@ -1,4 +1,4 @@
-package me.exerosis.component.event.system;
+package me.exerosis.component.events.system;
 
 import me.exerosis.component.ComponentSystem;
 

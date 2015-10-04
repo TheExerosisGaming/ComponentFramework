@@ -1,9 +1,9 @@
-package me.exerosis.component.event.componet;
+package me.exerosis.component.events.componet;
 
 import me.exerosis.component.Component;
 import me.exerosis.component.ComponentSystem;
-import me.exerosis.component.event.system.SystemEvent;
-import me.exerosis.reflection.event.Cancellable;
+import me.exerosis.component.event.Cancellable;
+import me.exerosis.component.events.system.SystemEvent;
 
 public class ComponentEvent extends SystemEvent implements Cancellable {
     private final Component component;
