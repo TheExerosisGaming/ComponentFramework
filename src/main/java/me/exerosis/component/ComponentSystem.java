@@ -4,7 +4,10 @@ import me.exerosis.component.event.EventManager;
 import me.exerosis.component.events.componet.ComponentDisableEvent;
 import me.exerosis.component.events.componet.ComponentEnableEvent;
 import me.exerosis.component.systemstate.ComponentSystemHolder;
+import me.exerosis.reflection.data.Pair;
 import me.exerosis.reflection.pool.InstancePool;
+
+import java.util.Map;
 
 public interface ComponentSystem {
 
@@ -34,6 +37,18 @@ public interface ComponentSystem {
 
     default void setDoesFollowDependencyInjection(boolean doesFollowDependencyInjection) {
         ComponentSystemHolder.setDoesFollowDependencyInjection(this, doesFollowDependencyInjection);
+    }
+
+    default void addComponent(Enum enable, Enum disable, Component component) {
+        ComponentSystemHolder.getGameGameComponents(this).put(Pair.of(enable, disable), component);
+    }
+
+    default void addComponent(Component... instances) {
+        for (Component instance : instances) getInstancePool().addIfNotPresent(instance);
+    }
+
+    default Map<Pair<Enum, Enum>, Component> getGameGameComponents() {
+        return ComponentSystemHolder.getGameGameComponents(this);
     }
 
     // ComponentSystem Management
@@ -70,13 +85,5 @@ public interface ComponentSystem {
             });
         }
         System.err.println("[ComponentSystem]Disabled a system:\n System Name: '" + toString() + "'\nComponent Count: '" + count[0] + "'");
-    }
-
-    default void addInstance(Object... instances) {
-        for (Object instance : instances) {
-            if (instance instanceof Component)
-                getInstancePool().addAllIfNotPresent(((Component) instance).getSubComponentsRecursively());
-            getInstancePool().addIfNotPresent(instance);
-        }
     }
 }
