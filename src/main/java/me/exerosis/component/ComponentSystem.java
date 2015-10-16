@@ -27,14 +27,17 @@ public interface ComponentSystem {
         ComponentSystemHolder.setSystemState(this, systemState);
     }
 
+    @Deprecated
     default InstancePool getInstancePool() {
         return ComponentSystemHolder.getInstancePool(this);
     }
 
+    @Deprecated
     default boolean doesFollowDependencyInjection() {
         return ComponentSystemHolder.doesFollowDependencyInjection(this);
     }
 
+    @Deprecated
     default void setDoesFollowDependencyInjection(boolean doesFollowDependencyInjection) {
         ComponentSystemHolder.setDoesFollowDependencyInjection(this, doesFollowDependencyInjection);
     }

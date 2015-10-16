@@ -1,5 +1,6 @@
 package me.exerosis.component;
 
+import me.exerosis.component.event.EventManager;
 import me.exerosis.component.events.system.SystemDisableEvent;
 import me.exerosis.component.events.system.SystemEnableEvent;
 import me.exerosis.component.factory.SystemFactory;
@@ -7,6 +8,7 @@ import me.exerosis.component.factory.SystemFactory;
 public class SystemHolder {
     private SystemFactory factory;
     private ComponentSystem currentSystem;
+    private EventManager eventManager = new EventManager();
 
     // ComponentSystem management.
     public void nextSystem() {
@@ -47,10 +49,22 @@ public class SystemHolder {
         }
     }
 
+    public ComponentSystem getCurrentSystem() {
+        return currentSystem;
+    }
+
     // Getters and setters.
     public void setCurrentSystem(ComponentSystem system) {
         disableSystem();
         enableSystem(system);
+    }
+
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+
+    public void setEventManager(EventManager eventManager) {
+        this.eventManager = eventManager;
     }
 
     public SystemFactory getFactory() {

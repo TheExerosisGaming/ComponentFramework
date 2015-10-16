@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public class ComponentSystemHolder {
-
     private static Map<ComponentSystem, PseudoInstance> instances = new WeakHashMap<>();
 
     private ComponentSystemHolder() {
