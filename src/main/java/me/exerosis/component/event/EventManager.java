@@ -1,5 +1,8 @@
 package me.exerosis.component.event;
 
+import me.exerosis.event.Cancellable;
+import me.exerosis.event.EventExecutor;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.AbstractMap.SimpleEntry;
@@ -62,8 +65,7 @@ public class EventManager {
 
         for (Entry<Object, Entry<Method, EventListener>> entry : listenerMethods) {
 
-            if (((entry.getValue().getValue().ignoreCancelled()) && ((event instanceof Cancellable)) && (((Cancellable) event).isCancelled()))
-                    || postEvent != entry.getValue().getValue().postEvent()) {
+            if (postEvent != entry.getValue().getValue().postEvent()) {
                 continue;
             }
 
